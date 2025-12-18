@@ -1,12 +1,17 @@
 # Data
 
-This folder contains de-identified Emergency Department data used for analysis.
+This folder contains a **sample** of the Emergency Department patient
+flow dataset used in this project.
 
-## Data Note
+## Files
 
-Due to GitHub file size limitations, only a sample of the Emergency
-Department dataset is included in this repository.
+- `ed_patient_flow_sample.csv`
+  - Small representative subset of the full dataset
+  - Used for demonstration and dashboard development
 
-The full dataset was obtained from a public Kaggle source and used
-locally for analysis, feature engineering, modeling, and dashboarding.
+## Notes
 
+- The full dataset contains over 550k records and is not included due
+  to size and privacy considerations.
+- Column names and structure match the full dataset to ensure
+  reproducibility.
