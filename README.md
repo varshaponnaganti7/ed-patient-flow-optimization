@@ -72,5 +72,29 @@ An interactive Tableau dashboard summarizes high-acuity patient flow:
 ---
 
 ## 📁 Repository Structure
+data/ → Sample dataset and data documentation
+notebooks/ → Jupyter notebooks for analysis and modeling
+dashboard/ → Dashboard explanation and screenshots
+
+---
+
+
+---
+
+## 🔒 Data Privacy
+
+The full dataset is not shared due to size and privacy constraints.
+A representative sample is provided for reproducibility.
+
+---
+
+## 🧠 Skills Demonstrated
+
+- Python (Pandas, NumPy, scikit-learn)
+- Machine Learning (classification, evaluation)
+- Feature engineering & preprocessing
+- Model interpretability (SHAP, feature importance)
+- Data visualization (Tableau)
+- Healthcare analytics
 
 
