@@ -72,9 +72,9 @@ An interactive Tableau dashboard summarizes high-acuity patient flow:
 ---
 
 ## 📁 Repository Structure
-data/ → Sample dataset and data documentation
-notebooks/ → Jupyter notebooks for analysis and modeling
-dashboard/ → Dashboard explanation and screenshots
+- data/ → Sample dataset and data documentation
+- notebooks/ → Jupyter notebooks for analysis and modeling
+- dashboard/ → Dashboard explanation and screenshots
 
 ---
 
