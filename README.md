@@ -31,9 +31,9 @@ The goal is to support hospital decision-making by understanding:
 
 ## 🧪 Data Science Workflow
 
-1. Exploratory Data Analysis (EDA)
-2. Feature inspection and missingness analysis
-3. Target variable creation
+1. Data loading and exploratory data analysis
+2. Target variable creation (`high_acuity`)
+3. Feature inspection and missingness analysis
 4. Preprocessing (categorical encoding, numeric imputation)
 5. Baseline model (Logistic Regression)
 6. Advanced model (Random Forest)
