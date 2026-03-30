@@ -5,16 +5,13 @@ import pandas as pd
 import joblib
 import os
 
-# =========================
-# CONFIG (GitHub-safe)
-# =========================
+
+# CONFIG 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_PATH = os.path.join(BASE_DIR, "models", "rf_pipeline.pkl")
 
-# =========================
 # LOAD MODEL
-# =========================
 
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(
@@ -26,9 +23,7 @@ model = joblib.load(MODEL_PATH)
 # Get expected columns from pipeline
 expected_cols = model.named_steps["preprocessor"].feature_names_in_
 
-# =========================
 # VALIDATION
-# =========================
 
 def validate_input(df):
     if df.empty:
@@ -39,9 +34,7 @@ def validate_input(df):
     
     return df
 
-# =========================
 # CLEANING
-# =========================
 
 def clean_data(df):
     df = df.copy()
@@ -51,9 +44,7 @@ def clean_data(df):
     
     return df
 
-# =========================
-# ALIGN DATA (KEY PART 🔥)
-# =========================
+# ALIGN DATA 
 
 def align_columns(df, expected_cols):
     df = df.copy()
@@ -73,9 +64,7 @@ def align_columns(df, expected_cols):
     
     return df
 
-# =========================
 # RISK CATEGORIZATION
-# =========================
 
 def categorize_risk(prob):
     if prob < 0.3:
@@ -85,9 +74,7 @@ def categorize_risk(prob):
     else:
         return "High Risk"
 
-# =========================
 # MAIN FUNCTION
-# =========================
 
 def predict(file_path, output_path="predictions.csv"):
     
@@ -117,9 +104,7 @@ def predict(file_path, output_path="predictions.csv"):
     
     print(f"Predictions saved to {output_path}")
 
-# =========================
 # RUN
-# =========================
 
 if __name__ == "__main__":
     
