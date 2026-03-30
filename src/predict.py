@@ -1,30 +1,25 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# test dataset
-
-# In[13]:
-
-
-#!/usr/bin/env python
-# coding: utf-8
-
 import pandas as pd
 import joblib
 import os
 
 # =========================
-# CONFIG
+# CONFIG (GitHub-safe)
 # =========================
 
-MODEL_PATH = "/Users/varshaponnaganti/Desktop/projects/healthcare/P_HC_1.2_Emergency_EDwait/ed-patient-flow-ml/models/rf_pipeline.pkl"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "models", "rf_pipeline.pkl")
 
 # =========================
 # LOAD MODEL
 # =========================
 
 if not os.path.exists(MODEL_PATH):
-    raise FileNotFoundError("Model file not found. Train the model first.")
+    raise FileNotFoundError(
+        "Model not found. Please run 'notebooks/01_model_training.ipynb' first."
+    )
 
 model = joblib.load(MODEL_PATH)
 
@@ -66,13 +61,11 @@ def align_columns(df, expected_cols):
     missing_cols = [col for col in expected_cols if col not in df.columns]
     extra_cols = [col for col in df.columns if col not in expected_cols]
     
-    # Create missing columns at once (FAST)
+    # Create missing columns at once
     missing_df = pd.DataFrame(0, index=df.index, columns=missing_cols)
     
-    # Combine in one step
     df = pd.concat([df, missing_df], axis=1)
     
-    # Keep only expected columns
     df = df[expected_cols]
     
     print(f"Added {len(missing_cols)} missing columns")
@@ -132,10 +125,3 @@ if __name__ == "__main__":
     
     input_file = input("Enter input CSV file path: ")
     predict(input_file)
-
-
-# In[ ]:
-
-
-
-
