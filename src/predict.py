@@ -5,7 +5,6 @@ import pandas as pd
 import joblib
 import os
 
-
 # CONFIG 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,8 +19,11 @@ if not os.path.exists(MODEL_PATH):
 
 model = joblib.load(MODEL_PATH)
 
-# Get expected columns from pipeline
-expected_cols = model.named_steps["preprocessor"].feature_names_in_
+# Get expected columns safely
+try:
+    expected_cols = model.named_steps["preprocessor"].feature_names_in_
+except:
+    raise AttributeError("Preprocessor not found in pipeline.")
 
 # VALIDATION
 
@@ -44,7 +46,7 @@ def clean_data(df):
     
     return df
 
-# ALIGN DATA 
+# ALIGN DATA
 
 def align_columns(df, expected_cols):
     df = df.copy()
@@ -52,15 +54,15 @@ def align_columns(df, expected_cols):
     missing_cols = [col for col in expected_cols if col not in df.columns]
     extra_cols = [col for col in df.columns if col not in expected_cols]
     
-    # Create missing columns at once
+    # Create missing columns efficiently
     missing_df = pd.DataFrame(0, index=df.index, columns=missing_cols)
-    
     df = pd.concat([df, missing_df], axis=1)
     
+    # Keep only expected columns
     df = df[expected_cols]
     
-    print(f"Added {len(missing_cols)} missing columns")
-    print(f"Ignored {len(extra_cols)} extra columns")
+    print(f"[INFO] Added {len(missing_cols)} missing columns")
+    print(f"[INFO] Ignored {len(extra_cols)} extra columns")
     
     return df
 
@@ -76,23 +78,27 @@ def categorize_risk(prob):
 
 # MAIN FUNCTION
 
-def predict(file_path, output_path="predictions.csv"):
+def predict(file_path, output_path=None):
     
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"Input file not found: {file_path}")
     
-    print("Loading data...")
+    # Default output path
+    if output_path is None:
+        output_path = os.path.join(BASE_DIR, "predictions.csv")
+    
+    print("[INFO] Loading data...")
     df = pd.read_csv(file_path)
     
     df = validate_input(df)
     
-    print("Cleaning data...")
+    print("[INFO] Cleaning data...")
     df = clean_data(df)
     
-    print("Aligning columns...")
+    print("[INFO] Aligning columns...")
     X = align_columns(df, expected_cols)
     
-    print("Making predictions...")
+    print("[INFO] Making predictions...")
     predictions = model.predict(X)
     probabilities = model.predict_proba(X)[:, 1]
     
@@ -102,11 +108,16 @@ def predict(file_path, output_path="predictions.csv"):
     
     df.to_csv(output_path, index=False)
     
-    print(f"Predictions saved to {output_path}")
+    print(f"[INFO] Predictions saved to {output_path}")
 
 # RUN
 
 if __name__ == "__main__":
     
-    input_file = input("Enter input CSV file path: ")
+    default_path = os.path.join(BASE_DIR, "data", "sample_ed_data.csv")
+    
+    input_file = input(
+        f"Enter input CSV file path (default: {default_path}): "
+    ) or default_path
+    
     predict(input_file)
