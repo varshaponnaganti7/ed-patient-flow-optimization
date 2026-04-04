@@ -85,7 +85,7 @@ ed-patient-flow-optimization/
 
 ---
 
-## 📁 Dataset
+##  Dataset
 
 Original dataset is provided in R format:
 
