@@ -1,0 +1,20 @@
+# LARGE DATA FILES
+data/ed_patient_flow.csv
+data/5v_cleandf.rdata
+
+# MODEL FILES
+models/rf_pipeline.pkl
+*.pkl
+
+# JUPYTER
+.ipynb_checkpoints/
+
+# PYTHON CACHE
+__pycache__/
+*.pyc
+
+# MAC SYSTEM FILES
+.DS_Store
+
+# ENV FILES
+.env
